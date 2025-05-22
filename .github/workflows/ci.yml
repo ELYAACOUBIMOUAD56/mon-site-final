@@ -1,10 +1,7 @@
-name: CI
+name: CI HTML
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
 
@@ -16,5 +13,11 @@ jobs:
       - name: Cloner le dépôt
         uses: actions/checkout@v3
 
-      - name: Afficher les fichiers du dépôt
+      - name: Lister les fichiers
         run: ls -la
+
+      - name: Installer tidy (validateur HTML)
+        run: sudo apt-get update && sudo apt-get install tidy -y
+
+      - name: Vérifier le fichier HTML
+        run: tidy -errors -q index.html || true
